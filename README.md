@@ -12,8 +12,6 @@ This template built with [Next.js](https://nextjs.org), [AI SDK](https://ai-sdk.
 
 ## Features
 
-- AI Chat + API playground to see x402 in action
-- AI agent that can pay for tools
 - Remote MCP server with "paid" tools
 - Paywalled APIs
 - Paywalled pages (for bots)
