@@ -23,7 +23,7 @@ export const x402Middleware = paymentMiddleware(
       price: "$0.005",
       network,
       config: {
-        description: "Access to protected content",
+        description: "Access to protected math functions",
       },
     },
   },
