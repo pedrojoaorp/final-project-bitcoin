@@ -7,8 +7,9 @@ A implementação do projeto pode ser acessada por meio deste link: (https://fin
 O protocolo x402 foi desenvolvido pela Coinbase para permitir pagamentos com stablecoins de maneira mais rápida e automática, implementado diretamente sobre o protocolo HTTP. O nome deriva do código de resposta 402 Payment Required (https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/402) utilizado no protocolo, que já existe no protocolo HTTP, mas até o momento é utilizado de maneira infrequente e não padronizada. O uso proposto para este protocolo é, de acordo com a Coinbase, "permitir que os serviços monetizem APIs e conteúdo digital na blockchain, possibilitando que clientes, tanto humanos quanto máquinas, paguem programaticamente pelo acesso sem contas, sessões ou autenticação complexa".
 ### Funcionamento
 Um pagamento utilizando o protocolo x402 segue os seguintes passos: (fonte da imagem: Coinbase)
+
 <img width="840" height="486" alt="image" src="https://github.com/user-attachments/assets/7e5bc0e6-9d79-4b67-94c9-eebf92cc7900" />
-###### 
+ 
 1. O cliente faz uma requisção para acessar algum recurso em um endpoint protegido. O cliente pode ser tanto um ser humano quanto qualquer outro programa.
 2. O servidor retorna um código de status 402 com os detalhes do pagamento no corpo da resposta.
 3. O cliente analisa os requisitos de pagamento e cria uma menagem útil de pagamento utilizando a própria carteira, contanto que a carteira seja compatível com EVM (Ethereum Virtual Machine)
@@ -30,7 +31,9 @@ A Coinbase fornece um serviço de facilitador para ser utilizado em transações
 O projeto inclui uma demonstração do protocolo x402 com base no template cujo link está no fim da página. A demonstração inclui um ambiente teste onde podem ser realizadas tarefas pré-criadas que utilizam transações feitas com o protocolo x402, mostrando ao usuário as respostas das requisições que compõem uma transação. Apesar do template também incluir a possibilidade de conexão com chats LLM que conseguem interagir com o protocolo, essa funcionalidade foi removida a fim de simplificar a demonstração.
 
 A primeira tarefa consiste em fazer uma requisição para receber o resultado de uma soma, que está bloqueado atrás de uma paywall.
+
 <img width="683" height="1841" alt="image" src="https://github.com/user-attachments/assets/84af1897-7e52-4fe0-89f8-38e5c5ecb016" />
+
 Por meio da demonstração podemos ver as requisições que compõem uma transação. Analisando as requisições feitas, verificamos que a transação segue a ordem esperada:
 * Primeiro, o cliente envia uma requisição sem informação nenhuma;
 * O servidor retorna o código 402 com os dados do pagamento no corpo da resposta;
