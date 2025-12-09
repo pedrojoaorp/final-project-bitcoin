@@ -6,8 +6,9 @@ A implementação do projeto pode ser acessada por meio deste link: (https://fin
 ## Sobre x402
 O protocolo x402 foi desenvolvido pela Coinbase para permitir pagamentos com stablecoins de maneira mais rápida e automática, implementado diretamente sobre o protocolo HTTP. O nome deriva do código de resposta 402 Payment Required (https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/402) utilizado no protocolo, que já existe no protocolo HTTP, mas até o momento é utilizado de maneira infrequente e não padronizada. O uso proposto para este protocolo é, de acordo com a Coinbase, "permitir que os serviços monetizem APIs e conteúdo digital na blockchain, possibilitando que clientes, tanto humanos quanto máquinas, paguem programaticamente pelo acesso sem contas, sessões ou autenticação complexa".
 ### Funcionamento
-Um pagamento utilizando o protocolo x402 segue os seguintes passos:
+Um pagamento utilizando o protocolo x402 segue os seguintes passos: (fonte da imagem: Coinbase)
 <img width="840" height="486" alt="image" src="https://github.com/user-attachments/assets/7e5bc0e6-9d79-4b67-94c9-eebf92cc7900" />
+###### 
 1. O cliente faz uma requisção para acessar algum recurso em um endpoint protegido. O cliente pode ser tanto um ser humano quanto qualquer outro programa.
 2. O servidor retorna um código de status 402 com os detalhes do pagamento no corpo da resposta.
 3. O cliente analisa os requisitos de pagamento e cria uma menagem útil de pagamento utilizando a própria carteira, contanto que a carteira seja compatível com EVM (Ethereum Virtual Machine)
@@ -28,5 +29,5 @@ A Coinbase fornece um serviço de facilitador para ser utilizado em transações
 ## Explicando a implementação
 ## Conclusão
 ## Fontes
-Template da implementação (x402 AI Starter): https://vercel.com/templates/next.js/x402-ai-starter
+Template da implementação (x402 AI Starter): https://vercel.com/templates/next.js/x402-ai-starter \n
 Informações sobre x402: https://www.x402.org/ // https://docs.cdp.coinbase.com/x402/welcome
