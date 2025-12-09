@@ -1,207 +1,92 @@
 "use client";
 
-import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
-} from "@/components/ai-elements/conversation";
-import { Message, MessageContent } from "@/components/ai-elements/message";
-import {
-  PromptInput,
-  PromptInputButton,
-  PromptInputModelSelect,
-  PromptInputModelSelectContent,
-  PromptInputModelSelectItem,
-  PromptInputModelSelectTrigger,
-  PromptInputModelSelectValue,
-  PromptInputSubmit,
-  PromptInputTextarea,
-  PromptInputToolbar,
-  PromptInputTools,
-} from "@/components/ai-elements/prompt-input";
 import { useState } from "react";
-import { useChat } from "@ai-sdk/react";
-import { Response } from "@/components/ai-elements/response";
-import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
+import { JobForm } from "@/components/job-form";
+import { LogViewer } from "@/components/log-viewer";
 
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningTrigger,
-} from "@/components/ai-elements/reasoning";
-import { Loader } from "@/components/ai-elements/loader";
-import {
-  Tool,
-  ToolContent,
-  ToolHeader,
-  ToolInput,
-  ToolOutput,
-} from "@/components/ai-elements/tool";
+export default function Playground() {
+  const [isJobRunning, setIsJobRunning] = useState(false);
+  const [currentEventSource, setCurrentEventSource] =
+    useState<EventSource | null>(null);
 
-const models = [
-  {
-    name: "GPT 4o",
-    value: "openai/gpt-4o",
-  },
-  {
-    name: "Gemini 2.0 Flash Lite",
-    value: "google/gemini-2.0-flash-lite",
-  },
-];
-const suggestions = {
-  "Use a paid tool": "Generate a random number between 1 and 10.",
-  "What's my account balance?": "Check your account balance.",
-  "Use an unpaid remotetool":
-    "Please greet the user with 'hello-remote' by the name: 'user'",
-  "Use an unpaid local tool":
-    "Please greet the user with 'hello-local' by the name: 'user'",
-};
+  const handleJobSubmit = async (
+    job: string,
+    enablePayment: boolean,
+    actAsScraper: boolean
+  ) => {
+    // Close any existing connection
+    if (currentEventSource) {
+      currentEventSource.close();
+    }
 
-const ChatBotDemo = () => {
-  const [input, setInput] = useState("");
-  const [model, setModel] = useState<string>(models[0].value);
-  const { messages, sendMessage, status } = useChat({
-    onError: (error) => console.error(error),
-  });
+    setIsJobRunning(true);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.trim()) {
-      sendMessage(
-        { text: input },
-        {
-          body: {
-            model: model,
-          },
+    try {
+      // Create the request URL with job parameter and headers as query params
+      const url = new URL("/api/bot", window.location.origin);
+      url.searchParams.set("job", job);
+
+      if (enablePayment) {
+        url.searchParams.set("enable-payment", "true");
+      }
+
+      if (actAsScraper && job === "scrape") {
+        url.searchParams.set("act-as-scraper", "true");
+      }
+
+      // Create EventSource for the specific job
+      const eventSource = new EventSource(url.toString());
+      setCurrentEventSource(eventSource);
+
+      eventSource.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "result" || data.type === "error") {
+            // Job completed
+            setIsJobRunning(false);
+            eventSource.close();
+            setCurrentEventSource(null);
+          }
+        } catch (error) {
+          console.error("Error parsing SSE data:", error);
         }
-      );
-      setInput("");
+      };
+
+      eventSource.onerror = (error) => {
+        console.error("EventSource error:", error);
+        setIsJobRunning(false);
+        eventSource.close();
+        setCurrentEventSource(null);
+      };
+    } catch (error) {
+      console.error("Error submitting job:", error);
+      setIsJobRunning(false);
     }
   };
 
-  const handleSuggestionClick = (suggestion: keyof typeof suggestions) => {
-    sendMessage(
-      { text: suggestions[suggestion] },
-      {
-        body: {
-          model: model,
-        },
-      }
-    );
-  };
-
   return (
-    <div className="w-full p-6 relative size-full max-w-4xl mx-auto">
-      <div className="flex flex-col h-full">
-        <Conversation className="h-full">
-          <ConversationContent>
-            {messages.map((message) => (
-              <Message from={message.role} key={message.id}>
-                <MessageContent>
-                  {message.parts.map((part, i) => {
-                    if (part.type === "text") {
-                      return (
-                        <Response key={`${message.id}-${i}`}>
-                          {part.text}
-                        </Response>
-                      );
-                    } else if (part.type === "reasoning") {
-                      return (
-                        <Reasoning
-                          key={`${message.id}-${i}`}
-                          className="w-full"
-                          isStreaming={status === "streaming"}
-                        >
-                          <ReasoningTrigger />
-                          <ReasoningContent>{part.text}</ReasoningContent>
-                        </Reasoning>
-                      );
-                    } else if (
-                      part.type === "dynamic-tool" ||
-                      part.type.startsWith("tool-")
-                    ) {
-                      return (
-                        <Tool defaultOpen={true} key={`${message.id}-${i}`}>
-                          {/* @ts-expect-error */}
-                          <ToolHeader part={part} />
-                          <ToolContent>
-                            {/* @ts-expect-error */}
-                            <ToolInput input={part.input} />
-                            <ToolOutput
-                              // @ts-expect-error
-                              part={part}
-                              // @ts-expect-error
-                              network={message.metadata?.network}
-                            />
-                          </ToolContent>
-                        </Tool>
-                      );
-                    } else {
-                      return null;
-                    }
-                  })}
-                </MessageContent>
-              </Message>
-            ))}
-            {status === "submitted" && <Loader />}
-            {status === "error" && <div>Something went wrong</div>}
-          </ConversationContent>
-          <ConversationScrollButton />
-        </Conversation>
+    <div className="container mx-auto p-6">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
+          Job Playground
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Test different jobs that use x402 paywalled endpoints and watch
+          real-time server logs
+        </p>
+      </div>
 
-        <Suggestions className="justify-center">
-          {Object.keys(suggestions).map((suggestion) => (
-            <Suggestion
-              key={suggestion}
-              suggestion={suggestion}
-              onClick={() =>
-                handleSuggestionClick(suggestion as keyof typeof suggestions)
-              }
-              variant="outline"
-              size="sm"
-            />
-          ))}
-        </Suggestions>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left side - Job Form */}
+        <div className="border rounded-lg">
+          <JobForm onSubmit={handleJobSubmit} isSubmitting={isJobRunning} />
+        </div>
 
-        <PromptInput onSubmit={handleSubmit} className="mt-4">
-          <PromptInputTextarea
-            onChange={(e) => setInput(e.target.value)}
-            value={input}
-            ref={(ref) => {
-              if (ref) {
-                ref.focus();
-              }
-            }}
-          />
-          <PromptInputToolbar>
-            <PromptInputTools>
-              <PromptInputModelSelect
-                onValueChange={(value) => {
-                  setModel(value);
-                }}
-                value={model}
-              >
-                <PromptInputModelSelectTrigger>
-                  <PromptInputModelSelectValue />
-                </PromptInputModelSelectTrigger>
-                <PromptInputModelSelectContent>
-                  {models.map((model) => (
-                    <PromptInputModelSelectItem
-                      key={model.value}
-                      value={model.value}
-                    >
-                      {model.name}
-                    </PromptInputModelSelectItem>
-                  ))}
-                </PromptInputModelSelectContent>
-              </PromptInputModelSelect>
-            </PromptInputTools>
-            <PromptInputSubmit disabled={!input} status={status} />
-          </PromptInputToolbar>
-        </PromptInput>
+        {/* Right side - Log Viewer */}
+        <div className="border rounded-lg">
+          <LogViewer isActive={isJobRunning} eventSource={currentEventSource} />
+        </div>
       </div>
     </div>
   );
-};
-
-export default ChatBotDemo;
+}
