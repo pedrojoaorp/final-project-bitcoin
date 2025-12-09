@@ -111,8 +111,6 @@ The second task(webscraping) consists of attempting to access a website whose co
 
 The x402 protocol is a very interesting proposal for implementing native Web payments. Marc Andreessen, co-founder of Netscape, once said that he considers the original sin of the Internet to be the fact that monetization was not implemented natively and built into what we know as the Internet today. The existence and lack of usage of the 402 Payment Required response code reflects this, and the x402 protocol—leveraging blockchain—has found a method that can be considered truly Web-native and decentralized for processing payments and monetizing Internet content without leaving the Web environment.
 
-Se quiser, posso também revisar o inglês para deixá-lo mais natural e técnico.
-
 ## Fontes
 Template da implementação (x402 AI Starter): https://vercel.com/templates/next.js/x402-ai-starter
 
