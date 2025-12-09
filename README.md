@@ -2,7 +2,6 @@
 Por Daniel José de Assumpção Palmar (211068379) e Pedro João Reffatti Pinheiro (211026510)
 
 | [Pt-br](https://pedrojoaorp.github.io/final-project-bitcoin/#introdu%C3%A7%C3%A3o) | [Eng](https://pedrojoaorp.github.io/final-project-bitcoin/#english) |
-| ----------- | ----------- |
 
 ## Introdução
 Este projeto consiste da análise do protocolo de pagamentos x402, em conjunto com a implementação de um template de interface web que pode fazer requisições com este protocolo.
@@ -34,7 +33,7 @@ Sua função é verificar mensagens de pagamentos enviadas por clientes, e resol
 
 A Coinbase fornece um serviço de *facilitador* para ser utilizado em transações, mas é relevante observar que o papel do facilitador é opcional na transação, e outros serviços de facilitador que realizem a mesma função podem ser desenvolvidos por outras entidades, mantendo assim o aspecto descentralizado da transação.
 ## Explicando a implementação
-O projeto inclui uma demonstração do protocolo x402 com base no template cujo link está no fim da página. A demonstração inclui um ambiente teste onde podem ser realizadas tarefas pré-criadas(jobs) que podem utilizar transações feitas com o protocolo x402, mostrando ao usuário as respostas das requisições que compõem uma transação. Apesar do template também incluir a possibilidade de conexão com chats LLM que conseguem interagir com o protocolo, essa funcionalidade foi removida a fim de simplificar a demonstração.
+O projeto foi realizado em Next em typescript, inclui uma demonstração do protocolo x402 com base no template cujo link está no fim da página. A demonstração inclui um ambiente teste onde podem ser realizadas tarefas pré-criadas(jobs) que podem utilizar transações feitas com o protocolo x402, explicitando ao usuário as requisições de api feitas pelo cliente e suas respectivas respostas do servidor que compõem uma transação. Apesar do template também incluir a possibilidade de conexão com chats LLM que conseguem interagir com o protocolo, essa funcionalidade foi removida a fim de simplificar a demonstração.
 
 A primeira tarefa consiste em fazer uma requisição para receber o resultado de uma soma, que está bloqueado atrás de uma paywall.
 
