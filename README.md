@@ -1,7 +1,7 @@
 # final-project-bitcoin
 Por Daniel José Palmar de Assumpção () e Pedro João Reffatti Pinheiro (211026510)
 ## Introdução
-Este projeto consiste da análise do protocolo de pagamentos x402, em conjunto com a implementação de um template de interface web que pode fazer requisições e até utilizar modelos LLM para realizar interações com este protocolo.
+Este projeto consiste da análise do protocolo de pagamentos x402, em conjunto com a implementação de um template de interface web que pode fazer requisições com este protocolo.
 A implementação do projeto pode ser acessada por meio deste link: (https://final-project-bitcoin-three.vercel.app/). 
 ## Sobre x402
 O protocolo x402 foi desenvolvido pela Coinbase para permitir pagamentos com stablecoins de maneira mais rápida e automática, implementado diretamente sobre o protocolo HTTP. O nome deriva do código de resposta 402 Payment Required (https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/402) utilizado no protocolo, que já existe no protocolo HTTP, mas até o momento é utilizado de maneira infrequente e não padronizada. O uso proposto para este protocolo é, de acordo com a Coinbase, "permitir que os serviços monetizem APIs e conteúdo digital na blockchain, possibilitando que clientes, tanto humanos quanto máquinas, paguem programaticamente pelo acesso sem contas, sessões ou autenticação complexa".
@@ -27,7 +27,19 @@ Sua função é verificar mensagens de pagamentos enviadas por clientes, e resol
 
 A Coinbase fornece um serviço de facilitador para ser utilizado em transações, mas é relevante observar que o papel do facilitador é opcional na transação, e outros serviços de facilitador que realizem a mesma função podem ser desenvolvidos por outras entidades, mantendo assim o aspecto descentralizado da transação.
 ## Explicando a implementação
+O projeto inclui uma demonstração do protocolo x402 com base no template cujo link está no fim da página. A demonstração inclui um ambiente teste onde podem ser realizadas tarefas pré-criadas que utilizam transações feitas com o protocolo x402, mostrando ao usuário as respostas das requisições que compõem uma transação. Apesar do template também incluir a possibilidade de conexão com chats LLM que conseguem interagir com o protocolo, essa funcionalidade foi removida a fim de simplificar a demonstração.
+
+A primeira tarefa consiste em fazer uma requisição para receber o resultado de uma soma, que está bloqueado atrás de uma paywall.
+<img width="683" height="1841" alt="image" src="https://github.com/user-attachments/assets/84af1897-7e52-4fe0-89f8-38e5c5ecb016" />
+Por meio da demonstração podemos ver as requisições que compõem uma transação. Analisando as requisições feitas, verificamos que a transação segue a ordem esperada:
+* Primeiro, o cliente envia uma requisição sem informação nenhuma;
+* O servidor retorna o código 402 com os dados do pagamento no corpo da resposta;
+* O cliente envia outra requisição contendo a mensagem assinada confirmando o pagamento;
+* Por último, o servidor retorna o código 200 e o conteúdo de interesse para o cliente.
+
+A segunda tarefa pré-criada consiste na tentativa de acessar um site cujo conteúdo está bloqueado por uma paywall (como um artigo de notícia, por exemplo). Novamente, as requisições seguem a ordem esperada, exceto que o conteúdo entregue para o cliente na resposta final é uma documento HTML.
 ## Conclusão
+O protocolo x402 é uma proposta muito interessante para uma implementação de pagamentos nativa para o ambiente da Web. Marc Andreessen, co-fundador do Netscape, falou que considera o pecado original da Internet ser o fato de que monetização não foi implementada de maneira nativa e embutida no que conhecemos como a Internet hoje em dia. A existência e inutilização do código de resposta 402 Payment Required reflete esse aspecto, e o protocolo x402 conseguiu, com ajuda da blockchain encontrar uma maneira que pode ser considerada verdadeiramente nativa da Web e descentralizada como a Web de processar pagamentos, e monetizar o conteúdo da Internet sem sair do ambiente da Internet. 
 ## Fontes
 Template da implementação (x402 AI Starter): https://vercel.com/templates/next.js/x402-ai-starter
 
