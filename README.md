@@ -21,7 +21,9 @@ Um pagamento utilizando o protocolo x402 segue os seguintes passos:
 11. O servidor retorna uma resposta 200 OK para o cliente contendo o recurso requisitado, e os detalhes do pagamento realizado.
 #### Sobre o facilitador
 O facilitador é um serviço opcional no protocolo x402 que auxilia no processo de verificação e resolução de pagamentos entre clientes (compradores) e servidores (vendedores).
+
 Sua função é verificar mensagens de pagamentos enviadas por clientes, e resolver pagamentos na blockchain no lugar dos servidores. A vantagem de utilizar um facilitador é que todas as complexidades que surgem ao interagir com a blockchain, como a verificação e validação de pagamentos em conexão com a rede, são resolvidas por ele, simplificando a interação tanto para o lado do cliente quanto para o do servidor. É relevante observar que o facilitador apenas executa e valida as transações com base nas assinaturas fornecidas pelo cliente, e portanto não tem contato com as quantias sendo transferidas entre comprador e vendedor em momento nenhum.
+
 A Coinbase fornece um serviço de facilitador para ser utilizado em transações, mas é relevante observar que o papel do facilitador é opcional na transação, e outros serviços de facilitador que realizem a mesma função podem ser desenvolvidos por outras entidades, mantendo assim o aspecto descentralizado da transação.
 ## Explicando a implementação
 ## Conclusão
