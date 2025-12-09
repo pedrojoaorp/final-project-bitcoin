@@ -29,5 +29,6 @@ A Coinbase fornece um serviço de facilitador para ser utilizado em transações
 ## Explicando a implementação
 ## Conclusão
 ## Fontes
-Template da implementação (x402 AI Starter): https://vercel.com/templates/next.js/x402-ai-starter \n
+Template da implementação (x402 AI Starter): https://vercel.com/templates/next.js/x402-ai-starter
+
 Informações sobre x402: https://www.x402.org/ // https://docs.cdp.coinbase.com/x402/welcome
