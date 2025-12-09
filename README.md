@@ -6,7 +6,7 @@
 
 [x402](https://x402.org) is a new protocol built on top of HTTP for doing fully accountless payments easily, quickly, cheaply and securely.
 
-This template built with [Next.js](https://nextjs.org), [AI SDK](https://ai-sdk.dev), [AI Elements](https://ai-elements.dev), and [AI Gateway](https://vercel.com/ai-gateway) and the [Coinbase CDP](https://docs.cdp.coinbase.com/) shows off using x402 with a modern AI stack.
+This template built with [Next.js](https://nextjs.org), and the [Coinbase CDP](https://docs.cdp.coinbase.com/) shows off using x402 with a modern AI stack.
 
 **Demo: [https://x402-ai-starter.vercel.app/](https://x402-ai-starter.vercel.app/)**
 
