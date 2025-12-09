@@ -50,6 +50,8 @@ A segunda tarefa(webscraping) consiste na tentativa de acessar um site cujo cont
 ## Conclusão
 O protocolo x402 é uma proposta muito interessante para uma implementação de pagamentos nativa para o ambiente da Web. Marc Andreessen, co-fundador do Netscape, falou que considera o pecado original da Internet ser o fato de que monetização não foi implementada de maneira nativa e embutida no que conhecemos como a Internet hoje em dia. A existência e inutilização do código de resposta 402 Payment Required reflete esse aspecto, e o protocolo x402 conseguiu, com ajuda da blockchain encontrar uma maneira que pode ser considerada verdadeiramente nativa da Web e descentralizada como a Web de processar pagamentos, e monetizar o conteúdo da Internet sem sair do ambiente da Internet. 
 
+---
+
 ### English
 
 ## Introduction
@@ -108,8 +110,6 @@ The second task(webscraping) consists of attempting to access a website whose co
 ## Conclusion
 
 The x402 protocol is a very interesting proposal for implementing native Web payments. Marc Andreessen, co-founder of Netscape, once said that he considers the original sin of the Internet to be the fact that monetization was not implemented natively and built into what we know as the Internet today. The existence and lack of usage of the 402 Payment Required response code reflects this, and the x402 protocol—leveraging blockchain—has found a method that can be considered truly Web-native and decentralized for processing payments and monetizing Internet content without leaving the Web environment.
-
----
 
 Se quiser, posso também revisar o inglês para deixá-lo mais natural e técnico.
 
